@@ -1,0 +1,23 @@
+.elevator {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: $lift-color;
+  position: relative;
+
+
+  &__info{
+    width: 50%;
+    text-align: center;
+    background-color: rgb(255, 134, 134);
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 5px;
+    padding: 2px 0;
+    color: white;
+  }
+  &__img-move{
+    height: 12px;
+    margin-right: 3px;
+  }
+
+}
