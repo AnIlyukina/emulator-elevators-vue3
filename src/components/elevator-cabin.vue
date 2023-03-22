@@ -1,4 +1,5 @@
 <script setup>
+import { floorHeight } from "../../elevator-config";
 
 defineProps({
   elevator: {
@@ -12,7 +13,7 @@ defineProps({
 <template>
   <div
     :class="'elevator  elevator' + elevator.id"
-    :style="{'height': 150 + 'px'}"
+    :style="{'height': floorHeight + 'px'}"
   >
   </div>
 </template>

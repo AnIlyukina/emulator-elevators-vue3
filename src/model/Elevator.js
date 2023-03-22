@@ -1,19 +1,27 @@
+import {floorHeight} from "../../elevator-config";
+
 export default class Elevator {
-  constructor(floorCount, id, currentFloor, translateY) {
+  constructor(floorCount, id, currentFloor) {
     this.id = id;
     this.status = "free";
     this.currentFloor = currentFloor ? currentFloor : 1;
     this.transform = null;
     this.floor = floorCount;
-    this.position = translateY ? Math.abs(translateY) : 0;
-    this.translateY = null;
+    this.position = null
   }
 
-  move(floor, height) {
+  getCurrentPosition() {
+    this.position = this.currentFloor * floorHeight - floorHeight
+  }
+
+
+  move(floor) {
+    console.log(floor, 'floor')
+    console.log(this.currentFloor, 'this.currentFloor')
     const sizeMove = floor - this.currentFloor;
     const animationTime = Math.abs(sizeMove * 1000);
-    let translateY = -((floor - 1) * height);
-
+    let translateY = -((floor - 1) * floorHeight);
+    console.log(translateY, 'translateY')
     this.status = "busy";
 
     this.currentFloor = floor;
@@ -21,13 +29,15 @@ export default class Elevator {
     let element = this.getDomElement();
 
     const currentTranslateY = this.position ? this.position + translateY : translateY
-
+    console.log(currentTranslateY, 'currentTranslateY')
+    console.log(animationTime, 'animationTime')
+    console.log(element, 'element')
     element.style.transitionDuration = animationTime / 1000 + "s";
     element.style.transform = `translate(0, ${currentTranslateY}px)`;
     element.style.transitionTimingFunction = "linear";
     this.transform = sizeMove > 0 ? "up" : "down";
+    this.translateY = translateY;
     let finish = this.moving(animationTime).then(() => {
-      this.translateY = translateY;
       this.status = "chill";
       return this.chilling(3000);
     });
@@ -45,10 +55,10 @@ export default class Elevator {
 
   chilling(delay) {
     return new Promise((resolve) =>
-      setTimeout(() => {
-        this.status = "free";
-        resolve();
-      }, delay)
+        setTimeout(() => {
+          this.status = "free";
+          resolve();
+        }, delay)
     );
   }
 }
