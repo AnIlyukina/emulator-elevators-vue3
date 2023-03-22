@@ -78,14 +78,12 @@ for (let i = countFloor; i > 0; i--) {
 }
 
 const addToQueue = (floor) => {
-  const index = queque.findIndex((item) => item === floor);
-  const elevator = elevators.find(
-    (elevator) => elevator.currentFloor === floor
-  );
+  const index = queque.length > 0 ? queque.findIndex((item) => item.floor === floor) : -1;
+  const isEmptyFloor = elevators.every(elevator => elevator.currentFloor !== floor);
 
   // если этаж не находится в очереди и лифт не находится на выбранном этаже
   // добавляем вызов о очередь
-  if (index === -1 && !elevator) {
+  if (index === -1 && isEmptyFloor) {
     queque.push({
       floor: floor,
       status: "waiting",

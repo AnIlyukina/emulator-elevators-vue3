@@ -1,10 +1,10 @@
 // кол-во этажей
-export const countFloor = 9
+export const countFloor = 5
 // кол-во шахт
-export const countElevators = 2
+export const countElevators = 1
 // высота этажа (также устанавливается для высоты лифта)
 // Желательно настроить высоты так чтобы не ломать верстку при большом количестве этажей (при высоте экрана 1100px)
 // 16 этажей - 65 px
 // 13 этажей - 80 px
 // 9 этажей -  100 px
-export const floorHeight = 80
+export const floorHeight = 100
