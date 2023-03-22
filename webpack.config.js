@@ -12,11 +12,11 @@ module.exports = {
       directory: path.join(__dirname),
     },
     compress: true,
-    port: 8081,
+    // port: 8081,
   },
   output: {
     path: path.join(__dirname, "dist"),
-    publicPath: "./dist/",
+    publicPath: "/dist/",
     filename: "main.js",
   },
   module: {
