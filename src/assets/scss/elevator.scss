@@ -3,6 +3,7 @@
   box-sizing: border-box;
   background-color: $lift-color;
   position: relative;
+  border-radius: 15px;
 
 
   &__info{
@@ -20,4 +21,38 @@
     margin-right: 3px;
   }
 
+  &__door{
+    width: 50%;
+    background: linear-gradient(to left,  transparent 55%, white 55%) right;
+    background-size: 200%;
+    transition: 1s linear;
+    border-radius: 5px 5px 0 0;
+    margin: auto;
+    margin-top: 5px;
+  }
+}
+
+.open-close{
+  // время анимации зависит от количества времени, которое лифт
+  // находится в состоянии chill
+  animation-duration: 3s;
+  animation-name: identifier;
+  animation-timing-function: linear
+}
+@keyframes identifier {
+  50% {
+    background-position: left;
+  }
+
+  100% {
+    background-position: right;
+  }
+}
+
+//анимация появления инфикатора на кабине лифта
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
 }

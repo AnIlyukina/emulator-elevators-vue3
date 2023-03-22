@@ -131,7 +131,7 @@ const start = () => {
         :style="{'height': floorHeight + 'px'}"
         @click="addToQueue(item.floor)"
       >
-        <button class="button">
+        <button :class="`button button_type_${item.status}`">
           {{ item.floor }}
         </button>
       </div>

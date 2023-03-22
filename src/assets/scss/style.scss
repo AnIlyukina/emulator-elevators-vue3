@@ -4,6 +4,8 @@
 }
 #app {
   height: 100vh;
+  background: -webkit-linear-gradient(90deg, #f6f7f8,#e1e8f2,#d9e1ee);
+  background: linear-gradient(90deg, #f6f7f8,#e1e8f2,#d9e1ee);
 }
 
 @import './variables.scss';

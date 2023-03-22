@@ -52,5 +52,35 @@
   border: none;
   color: white;
   border-radius: 10px;
+  transition: 0.5s 'easy';
   cursor: pointer;
+
+  &.cursor {
+    cursor: default;
+  }
+
+
+
+  &_type{
+    &_free{
+      background-color: $button-free-color;
+
+      &:hover{
+        opacity: .8;
+      }
+    }
+
+    &_waiting{
+      background-color: $button-waiting-color;
+    }
+
+    &_started{
+      animation: glowing 500ms infinite;
+    }
+  }
+}
+@keyframes glowing {
+  0% { background-color: $button-waiting-color; box-shadow: 0 0 5px $button-waiting-color; }
+  50% { background-color: $button-started-color; box-shadow: 0 0 20px $button-started-color; }
+  100% { background-color: $button-waiting-color; box-shadow: 0 0 5px $button-waiting-color; }
 }

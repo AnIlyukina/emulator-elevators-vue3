@@ -1,1 +1,7 @@
-$lift-color: #0946ff;
+$lift-color: #727370;
+
+
+// цвета состояний кнопки
+$button-free-color: $lift-color;
+$button-waiting-color: #ff7590;
+$button-started-color: #a23939;
