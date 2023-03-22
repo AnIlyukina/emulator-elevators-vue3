@@ -17,6 +17,7 @@ export default class Elevator {
   move(floor) {
     const sizeMove = floor - this.currentFloor;
     this.currentFloor = floor;
+    
     const animationTime = Math.abs(sizeMove * 1000);
     let translateY = -((floor - 1) * floorHeight);
     this.status = "busy"
