@@ -13,7 +13,7 @@ defineProps({
 <template>
   <div
     :class="'elevator  elevator' + elevator.id"
-    :style="{'height': floorHeight + 'px'}"
+    :style="{'height': floorHeight + 'px', 'bottom': elevator.position ? elevator.position + 'px' : 0}"
   >
     <transition name="fade">
       <div

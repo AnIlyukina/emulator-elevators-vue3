@@ -1,4 +1,4 @@
-import {floorHeight} from "../../elevator-config";
+import { floorHeight } from "../../elevator-config";
 
 export default class Elevator {
   constructor(floorCount, id, currentFloor) {
@@ -7,31 +7,29 @@ export default class Elevator {
     this.currentFloor = currentFloor ? currentFloor : 1;
     this.transform = null;
     this.floor = floorCount;
-    this.position = null
+    this.position = null;
   }
 
   getCurrentPosition() {
-    this.position = this.currentFloor * floorHeight - floorHeight
+    this.position = this.currentFloor * floorHeight - floorHeight;
   }
 
-
   move(floor) {
-    console.log(floor, 'floor')
-    console.log(this.currentFloor, 'this.currentFloor')
     const sizeMove = floor - this.currentFloor;
     const animationTime = Math.abs(sizeMove * 1000);
     let translateY = -((floor - 1) * floorHeight);
-    console.log(translateY, 'translateY')
     this.status = "busy";
 
     this.currentFloor = floor;
 
     let element = this.getDomElement();
 
-    const currentTranslateY = this.position ? this.position + translateY : translateY
-    console.log(currentTranslateY, 'currentTranslateY')
-    console.log(animationTime, 'animationTime')
-    console.log(element, 'element')
+    const currentTranslateY = this.position
+      ? this.position + translateY
+      : translateY;
+    console.log(currentTranslateY, "currentTranslateY");
+    console.log(animationTime, "animationTime");
+    console.log(element, "element");
     element.style.transitionDuration = animationTime / 1000 + "s";
     element.style.transform = `translate(0, ${currentTranslateY}px)`;
     element.style.transitionTimingFunction = "linear";
@@ -55,10 +53,10 @@ export default class Elevator {
 
   chilling(delay) {
     return new Promise((resolve) =>
-        setTimeout(() => {
-          this.status = "free";
-          resolve();
-        }, delay)
+      setTimeout(() => {
+        this.status = "free";
+        resolve();
+      }, delay)
     );
   }
 }

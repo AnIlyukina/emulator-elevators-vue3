@@ -4,7 +4,7 @@ import {countElevators, countFloor, floorHeight} from '../../elevator-config'
 
 import Elevator from '../model/Elevator'
 import ElevatorCabin from './elevator-cabin.vue'
-import { reactive, watch } from 'vue'
+import { reactive, watch, onMounted } from 'vue'
 
 
 const elevators= reactive([])
@@ -15,9 +15,57 @@ const floorButtons = reactive([])
 const queque = reactive([])
 
 
-for (let i = 1; i <= countElevators; i++) {
-  let elevator = new Elevator(countFloor, i)
-  elevators.push(elevator)
+
+onMounted(() => {
+  let elevatorConfig = localStorage.getItem('elevatorConfig');
+  console.log(elevatorConfig)
+
+  // проверить конфигурации на соответсвие при перезагрузки страницы
+  let checkConfig = false
+  if (elevatorConfig) {
+    let elevatorConfigParsed = JSON.parse(elevatorConfig)
+    checkConfig = compareСonfig(elevatorConfigParsed)
+  }
+
+  // если конфигурации одинаковые, то берем данные из хранилища,
+  // иначе перерисовываем
+  if (checkConfig) {
+    let storageElevators = localStorage.getItem('elevator');
+    let storageQueque = localStorage.getItem('queque');
+    if (storageElevators && storageQueque) {
+
+      let storageElevatorsParsed = JSON.parse(storageElevators)
+      let storageQuequeParsed = JSON.parse(storageQueque)
+      storageElevatorsParsed.forEach((item) => {
+        let elevator = new Elevator(countFloor, item.id, item.currentFloor, item.translateY)
+        if (elevator.currentFloor > 1) {
+          elevator.getCurrentPosition()
+        }
+        elevators.push(elevator)
+      })
+      if (storageQuequeParsed) {
+        storageQuequeParsed.forEach((item) => {
+          if(item.status !== 'started') queque.push(item)
+          setTimeout(() => {
+            if (queque.length) start()
+          }, 1000)
+        })
+      }
+
+      console.log(elevators)
+      console.log(queque)
+
+    }
+  } else {
+    for (let i = 1; i <= countElevators; i++) {
+      let elevator = new Elevator(countFloor, i)
+      elevators.push(elevator)
+    }
+  }
+})
+
+const compareСonfig = (storageConfig) => {
+  return storageConfig.countElevators === countElevators && storageConfig.countFloor === countFloor && storageConfig.floorHeight === floorHeight
 }
 
 
@@ -25,8 +73,6 @@ for (let i = countFloor; i > 0; i--) {
   floorButtons.push({
     floor: i,
     // статусы в процессе обработки вызова
-    // для стилизации компонента
-    // free, waiting, started
     status: 'free'
   })
 }
@@ -105,6 +151,19 @@ const start = () => {
       // если очередь не пустая, то стартуем
       if (queque.length > 0) start()
     })
+  }
+
+
+  window.onbeforeunload = function() {
+    const elevator = JSON.stringify(elevators);
+    const que = JSON.stringify(queque)
+    const elevatorConfig = {
+      countElevators, countFloor, floorHeight
+    }
+    const config = JSON.stringify(elevatorConfig)
+    localStorage.setItem('elevatorConfig', config);
+    localStorage.setItem('elevator', elevator);
+    localStorage.setItem('queque', que);
   }
 }
 
