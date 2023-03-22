@@ -1,10 +1,10 @@
 <script setup>
-import ShaftList from "./components/shaft-list.vue";
+import Shafts from "./components/shafts.vue";
 
 </script>
 
 <template>
-  <shaft-list/>
+  <shafts/>
 </template>
 
 

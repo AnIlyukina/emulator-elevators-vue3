@@ -1,0 +1,114 @@
+.shafts{
+  height: 100vh;
+  padding: 10px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.shaft{
+  &__elevator {
+    width: 10%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: end;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-right: 15px;
+    border: solid 1px $elevator-color;
+    border-top: none;
+    position: relative;
+  }
+
+  &__floor{
+    text-align: center;
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    border-left: solid 1px $elevator-color;
+    border-bottom: solid 1px $elevator-color;
+  }
+
+}
+
+.block__button {
+  width: 100px;
+  height: 150px;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.block__buttons{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  -webkit-transition: 0.5s 'easy';
+  -o-transition: 0.5s 'easy';
+  transition: 0.5s 'easy';
+  cursor: pointer;
+
+  &.cursor {
+    cursor: default;
+  }
+
+
+
+  &_type{
+    &_free{
+      background-color: $button-free-color;
+
+      &:hover{
+        opacity: .8;
+      }
+    }
+
+    &_waiting{
+      background-color: $button-waiting-color;
+    }
+
+    &_started{
+      -webkit-animation: glowing 500ms infinite;
+              animation: glowing 500ms infinite;
+    }
+  }
+}
+@keyframes glowing {
+  0% { background-color: $button-waiting-color; box-shadow: 0 0 5px $button-waiting-color; }
+  50% { background-color: $button-started-color; box-shadow: 0 0 20px $button-started-color; }
+  100% { background-color: $button-waiting-color; box-shadow: 0 0 5px $button-waiting-color; }
+}

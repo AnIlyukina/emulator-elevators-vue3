@@ -4,10 +4,11 @@
 }
 #app {
   height: 100vh;
-  background: -webkit-linear-gradient(90deg, #f6f7f8,#e1e8f2,#d9e1ee);
+  background: -webkit-gradient(linear, left top, right top, from(#f6f7f8),color-stop(#e1e8f2),to(#d9e1ee));
+  background: -o-linear-gradient(left, #f6f7f8,#e1e8f2,#d9e1ee);
   background: linear-gradient(90deg, #f6f7f8,#e1e8f2,#d9e1ee);
 }
 
 @import './variables.scss';
-@import './shaft-lift.scss';
+@import './shafts.scss';
 @import './elevator.scss';

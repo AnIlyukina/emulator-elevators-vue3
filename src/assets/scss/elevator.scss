@@ -1,7 +1,8 @@
 .elevator {
   width: 100%;
-  box-sizing: border-box;
-  background-color: $lift-color;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: $elevator-color;
   position: relative;
   border-radius: 15px;
 
@@ -23,8 +24,12 @@
 
   &__door{
     width: 50%;
+    background: -webkit-gradient(linear,  right top, left top,  color-stop(55%, transparent), color-stop(55%, white)) right;
+    background: -o-linear-gradient(right,  transparent 55%, white 55%) right;
     background: linear-gradient(to left,  transparent 55%, white 55%) right;
     background-size: 200%;
+    -webkit-transition: 1s linear;
+    -o-transition: 1s linear;
     transition: 1s linear;
     border-radius: 5px 5px 0 0;
     margin: auto;
@@ -33,13 +38,23 @@
 }
 
 .open-close{
-  // время анимации зависит от количества времени, которое лифт
-  // находится в состоянии chill
-  animation-duration: 3s;
-  animation-name: identifier;
-  animation-timing-function: linear
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: openСlose;
+          animation-name: openСlose;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear
 }
-@keyframes identifier {
+@-webkit-keyframes openСlose {
+  50% {
+    background-position: left;
+  }
+
+  100% {
+    background-position: right;
+  }
+}
+@keyframes openСlose {
   50% {
     background-position: left;
   }
@@ -51,6 +66,8 @@
 
 //анимация появления инфикатора на кабине лифта
 .fade-enter-active, .fade-leave-active {
+  -webkit-transition: opacity .3s;
+  -o-transition: opacity .3s;
   transition: opacity .3s;
 }
 .fade-enter, .fade-leave-to{

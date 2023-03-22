@@ -27,9 +27,6 @@ export default class Elevator {
     const currentTranslateY = this.position
       ? this.position + translateY
       : translateY;
-    console.log(currentTranslateY, "currentTranslateY");
-    console.log(animationTime, "animationTime");
-    console.log(element, "element");
     element.style.transitionDuration = animationTime / 1000 + "s";
     element.style.transform = `translate(0, ${currentTranslateY}px)`;
     element.style.transitionTimingFunction = "linear";

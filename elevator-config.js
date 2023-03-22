@@ -1,5 +1,5 @@
 // кол-во этажей
-export const countFloor = 10
+export const countFloor = 9
 // кол-во шахт
 export const countElevators = 2
 // высота этажа (также устанавливается для высоты лифта)
