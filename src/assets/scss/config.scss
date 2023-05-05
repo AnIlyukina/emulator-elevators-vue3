@@ -1,0 +1,17 @@
+.config {
+  position: absolute;
+  padding: 15px;
+  background-color: #d9e1ee;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  &__label{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__input{
+    width: 100px;
+    padding: 3px;
+  }
+}

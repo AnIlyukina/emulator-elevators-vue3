@@ -29,6 +29,7 @@ onMounted(() => {
   if (checkConfig) {
     let storageElevators = localStorage.getItem("elevator");
     let storageQueque = localStorage.getItem("queque");
+
     if (storageElevators && storageQueque) {
       let storageElevatorsParsed = JSON.parse(storageElevators);
       let storageQuequeParsed = JSON.parse(storageQueque);
@@ -39,17 +40,24 @@ onMounted(() => {
           item.currentFloor,
           item.translateY
         );
+
         if (elevator.currentFloor > 1) {
           elevator.getCurrentPosition();
         }
+
         elevators.push(elevator);
       });
+
       if (storageQuequeParsed) {
         storageQuequeParsed.forEach((item) => {
+
           if (item.status !== "started") queque.push(item);
+
           setTimeout(() => {
+
             if (queque.length) start();
           }, 1000);
+
         });
       }
     }
