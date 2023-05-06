@@ -1,11 +1,16 @@
 <script setup>
-import { countElevators, countFloor, floorHeight } from "../../elevator-config";
+// import { countElevators, countFloor, floorHeight } from "../../elevator-config";
 
 import Elevator from "../model/Elevator";
 
 import ElevatorCabin from "./elevator-cabin.vue";
 
 import { reactive, watch, onMounted } from "vue";
+
+import { useConfiguration } from "../store/configuration";
+
+const { currentConfig } = useConfiguration();
+console.log(currentConfig);
 
 const elevators = reactive([]);
 
@@ -35,10 +40,10 @@ onMounted(() => {
       let storageQuequeParsed = JSON.parse(storageQueque);
       storageElevatorsParsed.forEach((item) => {
         let elevator = new Elevator(
-          countFloor,
           item.id,
-          item.currentFloor,
-          item.translateY
+          currentConfig.countFloor,
+          currentConfig.floorHeight,
+          item.currentFloor
         );
 
         if (elevator.currentFloor > 1) {
@@ -50,20 +55,17 @@ onMounted(() => {
 
       if (storageQuequeParsed) {
         storageQuequeParsed.forEach((item) => {
-
           if (item.status !== "started") queque.push(item);
 
           setTimeout(() => {
-
             if (queque.length) start();
           }, 1000);
-
         });
       }
     }
   } else {
-    for (let i = 1; i <= countElevators; i++) {
-      let elevator = new Elevator(countFloor, i);
+    for (let i = 1; i <= currentConfig.countElevators; i++) {
+      let elevator = new Elevator(i, currentConfig.countFloor, currentConfig.floorHeight);
       elevators.push(elevator);
     }
   }
@@ -71,13 +73,13 @@ onMounted(() => {
 
 const compareСonfig = (storageConfig) => {
   return (
-    storageConfig.countElevators === countElevators &&
-    storageConfig.countFloor === countFloor &&
-    storageConfig.floorHeight === floorHeight
+    storageConfig.countElevators === currentConfig.countElevators &&
+    storageConfig.countFloor === currentConfig.countFloor &&
+    storageConfig.floorHeight === currentConfig.floorHeight
   );
 };
 
-for (let i = countFloor; i > 0; i--) {
+for (let i = currentConfig.countFloor; i > 0; i--) {
   floorButtons.push({
     floor: i,
     // статусы в процессе обработки вызова
@@ -86,8 +88,11 @@ for (let i = countFloor; i > 0; i--) {
 }
 
 const addToQueue = (floor) => {
-  const index = queque.length > 0 ? queque.findIndex((item) => item.floor === floor) : -1;
-  const isEmptyFloor = elevators.every(elevator => elevator.currentFloor !== floor);
+  const index =
+    queque.length > 0 ? queque.findIndex((item) => item.floor === floor) : -1;
+  const isEmptyFloor = elevators.every(
+    (elevator) => elevator.currentFloor !== floor
+  );
 
   // если этаж не находится в очереди и лифт не находится на выбранном этаже
   // добавляем вызов о очередь
@@ -110,6 +115,24 @@ watch(queque, (value) => {
   });
 });
 
+watch(currentConfig, (value) => {
+  console.log(value)
+  elevators.splice(0, elevators.length); 
+  floorButtons.splice(0, floorButtons.length); 
+   for (let i = 1; i <= value.countElevators; i++) {
+      let elevator = new Elevator(i, value.countFloor, value.floorHeight);
+      elevators.push(elevator);
+    }
+
+    for (let i = currentConfig.countFloor; i > 0; i--) {
+      floorButtons.push({
+        floor: i,
+        // статусы в процессе обработки вызова
+        status: "free",
+      });
+    }
+});
+
 const start = () => {
   // находим свободныe лифты
   let freeElevators = elevators.filter((elevator) => {
@@ -127,7 +150,7 @@ const start = () => {
     if (freeElevators.length === 1) {
       suitableElevators = freeElevators[0];
     } else {
-      // проходим по списку и ищим ближайший лифт
+      // проходим по списку и ищем ближайший лифт
       let distance = null;
       freeElevators.forEach((elevator) => {
         if (!distance) {
@@ -161,9 +184,9 @@ const start = () => {
     const elevator = JSON.stringify(elevators);
     const que = JSON.stringify(queque);
     const elevatorConfig = {
-      countElevators,
-      countFloor,
-      floorHeight,
+      countElevators: currentConfig.countElevators,
+      countFloor: currentConfig.countFloor,
+      floorHeight: currentConfig.floorHeight,
     };
     const config = JSON.stringify(elevatorConfig);
     localStorage.setItem("elevatorConfig", config);
@@ -179,7 +202,7 @@ const start = () => {
       v-for="(elevator, index) in elevators"
       :key="index"
       class="shaft__elevator"
-      :style="{ height: elevator.floor * floorHeight + 'px' }"
+      :style="{ height: elevator.floor * currentConfig.floorHeight + 'px' }"
     >
       <elevator-cabin :elevator="elevator" />
     </div>
@@ -189,7 +212,7 @@ const start = () => {
         v-for="(item, index) in floorButtons"
         :key="index"
         class="block__button"
-        :style="{ height: floorHeight + 'px' }"
+        :style="{ height: currentConfig.floorHeight + 'px' }"
         @click="addToQueue(item.floor)"
       >
         <button :class="`button button_type_${item.status}`">

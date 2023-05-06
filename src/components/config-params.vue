@@ -1,10 +1,7 @@
 <script setup>
-defineProps({
-  configuration: {
-    type: Object,
-    required: true
-  }
-})
+import { useConfiguration } from '../store/configuration'
+
+const { currentConfig } = useConfiguration()
 
 </script>
 
@@ -13,7 +10,7 @@ defineProps({
     <label class="config__label">
       Кол-во этажей:
       <input
-        v-model="configuration.countFloor"
+        v-model="currentConfig.countFloor"
         class="config__input"
         type="number"
       >
@@ -21,7 +18,7 @@ defineProps({
     <label class="config__label">
       Кол-во лифтов:
       <input
-        v-model="configuration.countElevators"
+        v-model="currentConfig.countElevators"
         class="config__input"
         type="number"
       >
@@ -29,7 +26,7 @@ defineProps({
     <label class="config__label">
       Высота этажа (px):
       <input
-        v-model="configuration.floorHeight"
+        v-model="currentConfig.floorHeight"
         type="number"
         class="config__input"
       >

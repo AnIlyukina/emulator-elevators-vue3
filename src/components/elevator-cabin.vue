@@ -1,5 +1,5 @@
 <script setup>
-import { floorHeight } from "../../elevator-config";
+// import { floorHeight } from "../../elevator-config";
 
 defineProps({
   elevator: {
@@ -13,7 +13,7 @@ defineProps({
 <template>
   <div
     :class="'elevator  elevator' + elevator.id"
-    :style="{'height': floorHeight + 'px', 'bottom': elevator.position ? elevator.position + 'px' : 0}"
+    :style="{'height': elevator.floorHeight + 'px', 'bottom': elevator.position ? elevator.position + 'px' : 0}"
   >
     <transition name="fade">
       <div
@@ -34,7 +34,7 @@ defineProps({
     </transition>
     <div
       :class="[elevator.status === 'chill' ? 'open-close' : '', 'elevator__door']"
-      :style="{'height': floorHeight - 40 + 'px'}"
+      :style="{'height': elevator.floorHeight - 40 + 'px'}"
     />
   </div>
 </template>

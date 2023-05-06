@@ -1,9 +1,8 @@
-import { floorHeight } from "../../elevator-config";
-
 export default class Elevator {
-  constructor(floorCount, id, currentFloor) {
+  constructor(id, floorCount, floorHeight, currentFloor) {
     this.id = id;
     this.status = "free";
+    this.floorHeight = floorHeight;
     this.currentFloor = currentFloor ? currentFloor : 1;
     this.transform = null;
     this.floor = floorCount;
@@ -11,15 +10,15 @@ export default class Elevator {
   }
 
   getCurrentPosition() {
-    this.position = this.currentFloor * floorHeight - floorHeight;
+    this.position = this.currentFloor * this.floorHeight - this.floorHeight;
   }
 
   move(floor) {
     const sizeMove = floor - this.currentFloor;
     this.currentFloor = floor;
     const animationTime = Math.abs(sizeMove * 1000);
-    let translateY = -((floor - 1) * floorHeight);
-    this.status = "busy"
+    let translateY = -((floor - 1) * this.floorHeight);
+    this.status = "busy";
 
     let element = this.getDomElement();
 
